@@ -1,7 +1,11 @@
 import './App.css';
-import Button from './components/Button/Button';
+import LeftPanel from './layouts/LeftPanel/LeftPanel';
+import Body from './layouts/Body/Body';
+import Header from './components/Header/Header';
+import JournalList from './components/JournalList/JournalList';
 import CardButton from './components/CardButton/CardButton';
 import JournalItem from './components/JournalItem/JournalItem';
+import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 
 function App() {
 	const data = [
@@ -23,16 +27,21 @@ function App() {
 	];
 
 	return (
-		<div>
-			<h1>Заголовок 1</h1>
-			<p>Какой-то текст</p>
-			<Button />
-			<CardButton>Новое воспоминание</CardButton>
-			{data.map((el, index) => (
-				<CardButton key={index}>
-					<JournalItem title={el.title} date={el.date} text={el.text} />
-				</CardButton>
-			))}
+		<div className='app'>
+			<LeftPanel>
+				<Header />
+				<JournalAddButton />
+				<JournalList>
+					{data.map((el, index) => (
+						<CardButton key={index}>
+							<JournalItem title={el.title} date={el.date} text={el.text} />
+						</CardButton>
+					))}
+				</JournalList>
+			</LeftPanel>
+			<Body>
+				Body
+			</Body>
 		</div>
 	);
 }
