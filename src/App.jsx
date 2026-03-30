@@ -6,6 +6,7 @@ import JournalList from './components/JournalList/JournalList';
 import CardButton from './components/CardButton/CardButton';
 import JournalItem from './components/JournalItem/JournalItem';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
+import JournalForm from './components/JournalForm/JournalForm';
 
 function App() {
 	const data = [
@@ -40,7 +41,7 @@ function App() {
 				</JournalList>
 			</LeftPanel>
 			<Body>
-				Body
+				<JournalForm />
 			</Body>
 		</div>
 	);
