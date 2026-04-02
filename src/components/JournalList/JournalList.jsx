@@ -4,7 +4,7 @@ import './JournalList.css';
 
 function JournalList({ items }) {
 	if (items.length === 0) {
-		return <p>Записей пока нет, добавте первую</p>;
+		return <p>Записей пока нет, добавьте первую</p>;
 	}
 	const sortItems = (a, b) => a.date < b.date ? 1 : -1;
 	return <>
