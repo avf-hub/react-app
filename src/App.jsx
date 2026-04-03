@@ -8,18 +8,23 @@ import JournalForm from './components/JournalForm/JournalForm';
 import { useEffect, useState } from 'react';
 
 function App() {
-	const [items, setItems] = useState([]);
-
-	useEffect(() => {
+	const [items, setItems] = useState(() => {
 		const storedData = localStorage.getItem('data');
 		if (storedData) {
 			const data = JSON.parse(storedData);
-			setItems(data.map(item => ({
+			return data.map(item => ({
 				...item,
 				date: new Date(item.date)
-			})));
+			}));
 		}
-	}, []);
+		return [];
+	});
+
+	useEffect(() => {
+		if (items.length) {
+			localStorage.setItem('data', JSON.stringify(items));
+		}
+	}, [items]);
 
 	const addItem = item => {
 		setItems(oldItems => [...oldItems, {
