@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import Button from '../Button/Button';
 import styles from './JournalForm.module.css';
 import cn from 'classnames';
@@ -7,10 +7,28 @@ import { INITIAL_STATE, formReducer } from './JournalForm.state';
 function JournalForm({ onSubmit }) {
 	const [formSate, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
 	const { isValid, isFormReadyToSubmit, values } = formSate;
+	const titleRef = useRef();
+	const dateRef = useRef();
+	const textRef = useRef();
+
+	const focusError = (isValid) => {
+		switch(true) {
+		case !isValid.title:
+			titleRef.current.focus();
+			break;
+		case !isValid.date:
+			dateRef.current.focus();
+			break;
+		case !isValid.text:
+			textRef.current.focus();
+			break;
+		}
+	};
 
 	useEffect(() => {
 		let timerId;
 		if (!isValid.title || !isValid.date || !isValid.text) {
+			focusError(isValid);
 			timerId = setTimeout(() => dispatchForm({ type: 'RESET_VALIDITY' }), 2000);
 		}
 		return () => {
@@ -37,7 +55,7 @@ function JournalForm({ onSubmit }) {
 	return (
 		<form className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div>
-				<input type="text" name="title" onChange={onChange} value={values.title} className={cn(styles['input-title'], {
+				<input type="text" name="title" ref={titleRef} onChange={onChange} value={values.title} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.title
 				})} />
 			</div>
@@ -46,7 +64,7 @@ function JournalForm({ onSubmit }) {
 					<img src="/calendar.svg" alt="Иконка календаря" />
 					<span>Дата</span>
 				</label>
-				<input type="date" id="date" name="date" onChange={onChange} value={values.date} className={cn(styles['input'], {
+				<input type="date" id="date" name="date" ref={dateRef} onChange={onChange} value={values.date} className={cn(styles['input'], {
 					[styles['invalid']]: !isValid.date
 				})} />
 			</div>
@@ -58,7 +76,7 @@ function JournalForm({ onSubmit }) {
 				<input type="text" name="tag" id="tag" onChange={onChange} value={values.tag} className={styles['input']} />
 			</div>
 
-			<textarea name="text" id="" cols="30" rows="10" onChange={onChange} value={values.text} className={cn(styles['input'], {
+			<textarea name="text" id="" cols="30" rows="10" ref={textRef} onChange={onChange} value={values.text} className={cn(styles['input'], {
 				[styles['invalid']]: !isValid.text
 			})} ></textarea>
 			<Button text="Сохранить" />
