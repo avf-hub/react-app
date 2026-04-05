@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import styles from './JournalForm.module.css';
 import cn from 'classnames';
 import { INITIAL_STATE, formReducer } from './JournalForm.state';
+import Input from '../Input/Input';
 
 function JournalForm({ onSubmit }) {
 	const [formSate, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
@@ -55,25 +56,21 @@ function JournalForm({ onSubmit }) {
 	return (
 		<form className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div>
-				<input type="text" name="title" ref={titleRef} onChange={onChange} value={values.title} className={cn(styles['input-title'], {
-					[styles['invalid']]: !isValid.title
-				})} />
+				<Input type="text" name="title" ref={titleRef} isValid={isValid.title} onChange={onChange} value={values.title} appearence="title" />
 			</div>
 			<div className={styles['form-row']}>
 				<label htmlFor="date" className={styles['form-label']}>
 					<img src="/calendar.svg" alt="Иконка календаря" />
 					<span>Дата</span>
 				</label>
-				<input type="date" id="date" name="date" ref={dateRef} onChange={onChange} value={values.date} className={cn(styles['input'], {
-					[styles['invalid']]: !isValid.date
-				})} />
+				<Input type="date" id="date" name="date" isValid={isValid.date} ref={dateRef} onChange={onChange} value={values.date} />
 			</div>
 			<div className={styles['form-row']}>
 				<label htmlFor="tag" className={styles['form-label']}>
 					<img src="/folder.svg" alt="Иконка папки" />
 					<span>Метки</span>
 				</label>
-				<input type="text" name="tag" id="tag" onChange={onChange} value={values.tag} className={styles['input']} />
+				<Input type="text" name="tag" id="tag" onChange={onChange} value={values.tag} />
 			</div>
 
 			<textarea name="text" id="" cols="30" rows="10" ref={textRef} onChange={onChange} value={values.text} className={cn(styles['input'], {
