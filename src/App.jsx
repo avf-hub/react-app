@@ -23,8 +23,7 @@ function App() {
 
 	const addItem = item => {
 		setItems([...mapItems(items), {
-			title: item.title,
-			text: item.text,
+			...item,
 			date: new Date(item.date),
 			id: items.length > 0 ? Math.max(...items.map(it => it.id)) + 1 : 1
 		}]);
