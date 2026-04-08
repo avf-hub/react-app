@@ -3,6 +3,7 @@ import SelectUser from '../SelectUser/SelectUser';
 import styles from './Header.module.css';
 import Button from '../Button/Button';
 import viteLogo from '../../assets/vite.svg';
+import Logo from '../Logo/Logo';
 
 const logos = ['/logo.svg', viteLogo];
 
@@ -15,7 +16,7 @@ function Header() {
 
 	return (
 		<>
-			<img className={styles.logo} src={logos[logoIndex]} alt="Логотип журнала" />
+			<Logo image={logos[logoIndex]} />
 			<SelectUser />
 			<Button onClick={toggleLogo} >Сменить логотип</Button>
 		</>
